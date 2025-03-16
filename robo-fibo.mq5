@@ -11,14 +11,6 @@ CSymbolInfo SymbolInfo;
 input double risco = 500; // Risco em USD
 input int magic = 5147; // Número Mágico do robo
 
-input group "Media Móvel";
-input int periodoMM = 200;
-input ENUM_APPLIED_PRICE precoMM = PRICE_CLOSE;
-input ENUM_MA_METHOD tipoMM = MODE_SMA;
-input int periodoMMR = 50;
-input ENUM_APPLIED_PRICE precoMMR = PRICE_CLOSE;
-input ENUM_MA_METHOD tipoMMR = MODE_SMA;
-
 input group "Tamanho dos canais";
 
 input double tam25 = 0.25;
@@ -29,10 +21,6 @@ input double tam75 = 0.75;
 
 string ultimoTrade = 0;
 
-// Handle e Buffer MM
-
-int handleMM, handleMMR;
-double bufferMM[], bufferMMR[];
 
 int OnInit()
   {
@@ -42,25 +30,7 @@ int OnInit()
    TracarLinhas();
    Trade.SetExpertMagicNumber(magic);
    
-   // Carregando MM
-   
-   handleMM = iMA(_Symbol,PERIOD_CURRENT,periodoMM,0,tipoMM,precoMM);
-   if(handleMM == INVALID_HANDLE)
-   {
-    MessageBox("Falha ao carregar Handle MM");
-    return INIT_FAILED;
-   }else{
-     ChartIndicatorAdd(0,0, handleMM);
-   }
-   
-    handleMMR = iMA(_Symbol,PERIOD_CURRENT,periodoMMR,0,tipoMMR,precoMMR);
-   if(handleMM == INVALID_HANDLE)
-   {
-    MessageBox("Falha ao carregar Handle MMR");
-    return INIT_FAILED;
-   }else{
-     ChartIndicatorAdd(0,0, handleMMR);
-   }
+
    
 //---
    return(INIT_SUCCEEDED);
@@ -71,9 +41,6 @@ int OnInit()
 void OnDeinit(const int reason)
   {
 //
-
-   IndicatorRelease(handleMM);
-   IndicatorRelease(handleMMR);
    
   }
 //+------------------------------------------------------------------+
@@ -81,16 +48,6 @@ void OnDeinit(const int reason)
 //+------------------------------------------------------------------+
 void OnTick()
   {
-//---
-
-
-   CopyBuffer(handleMM,0,0,1, bufferMM);
-   ArraySetAsSeries(bufferMM, true);
-   
-   CopyBuffer(handleMMR,0,0,1, bufferMMR);
-   ArraySetAsSeries(bufferMMR, true);
-   
-   
    
 // Obtém o tempo da última barra semanal fechada
    datetime currentWeeklyBarTime = iTime(_Symbol, PERIOD_W1, 1);
