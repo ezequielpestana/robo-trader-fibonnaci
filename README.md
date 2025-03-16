@@ -8,13 +8,15 @@ Este projeto é um exemplo prático de um robô de negociação automática dese
 ## Funcionalidades
 
 - **Divisão da Vela Semanal:**
-  - Identifica a mínima e a máxima da vela semanal anterior.
+  - Identifica a mínima e a máxima da vela semanal anterior, criando apenas um canal de negociação por semana.
   - Divide a amplitude da vela em 4 canais (25%, 50%, 75% e 100%), aproximando uma análise dos níveis de Fibonacci.
 
 - **Critério de Entrada:**
   - Monitora as velas de 15 minutos (M15).
-  - Executa uma ordem de **compra** quando o preço rompe o nível de 50% para cima (abertura abaixo e fechamento acima do nível).
-  - Executa uma ordem de **venda** quando o preço rompe o nível de 50% para baixo (abertura acima e fechamento abaixo do nível).
+  - todas as entradas acontecem apenas quando há fechamento de vela, então a vela tem que abrir abaixo e fechar acima ou abrir acima ou fechar abaixo do ponto de entrada.
+  - O ponto de entrada é 50% de qualquer um dos 4 canais.
+  - Executa uma ordem de **compra** quando o preço rompe o nível de 50% para cima de um canal.
+  - Executa uma ordem de **venda** quando o preço rompe o nível de 50% para baixo de um canal.
   - Garante que não haja novas ordens se já houver uma posição ativa para o mesmo símbolo e magic number.
 
 - **Cálculo do Tamanho do Lote:**
@@ -29,7 +31,7 @@ Este projeto é um exemplo prático de um robô de negociação automática dese
   - Média Móvel de 50 períodos para confirmação de tendência.
 
 - **Visualização no Gráfico:**
-  - Desenha linhas horizontais representando os níveis críticos (mínima, 25%, 50%, 75% e máxima da vela semanal) para facilitar a análise.
+  - Desenha linhas horizontais representando os níveis críticos (mínima, 25%, 50%, 75% e máxima da vela semanal) para facilitar a análise e acompanhamento dos trades.
 
 ## Estratégia de Operação
 
@@ -93,13 +95,13 @@ Este projeto é um exemplo prático de um robô de negociação automática dese
 ## Riscos e Considerações Importantes
 
 - **Estratégia Não Testada Extensivamente:**  
-  Este robô é um exemplo educacional e não foi validado de forma abrangente. A estratégia pode não funcionar a longo prazo e não substitui uma análise robusta do mercado.
+  Este robô é um exemplo educacional e não foi validado de forma abrangente. A estratégia não funciona a longo prazo, embora tenha periodos de lucros em alguns prazos, ao longo do tempo a soma das operações resultam em perdas financeiras.
 
 - **Riscos Envolvidos:**  
-  O trading automatizado envolve riscos significativos, incluindo perdas financeiras. Recomenda-se utilizar o robô em ambiente de demonstração antes de operar com capital real.
+  O trading automatizado envolve riscos significativos, incluindo perdas financeiras. Recomenda-se utilizar o robô em ambiente de demonstração antes de operar com capital real. Este robô é um exemplo educacional e não foi validado de forma abrangente. A estratégia não funciona a longo prazo, embora tenha periodos de lucros em alguns prazos, ao longo do tempo a soma das operações resultam em perdas financeiras.
 
 - **Uso Educacional e Desenvolvimento Profissional:**  
-  Este projeto é ideal para desenvolvedores que desejam aprender sobre automação de operações financeiras e para profissionais de programação que buscam demonstrar habilidades práticas em MQL, gerenciamento de risco e automação de trading.
+  Este projeto é ideal para pessoas a se inspirarem e criarem suas estratégias, e também para programadores para ter uma ideia de como criar um robo.
 
 ## Contribuições
 
